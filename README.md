@@ -15,7 +15,6 @@
 </p>
 
 - [🪴 Overview](#-overview)
-- [🖼️ Features](#️-features)
 - [🖼️ References](#️-references)
 
 ## 🪴 Overview
@@ -27,13 +26,6 @@ A curated collection of high-quality wallpapers, organized by tags for easy brow
 📄 **See the full list** of wallpapers in [WALLPAPERS.md](./WALLPAPERS.md)
 
 📋 **Useful buttons** for NixOS users to quickly copy the `lib.fetchUrl()` function
-
-## 🖼️ Features
-
-- Curated, high-resolution wallpapers
-- Tagged for easy search and navigation
-- Direct download links
-- NixOS-friendly fetch buttons
 
 ## 🖼️ References
 
