@@ -45,7 +45,7 @@ All wallpapers must follow this format:
 - **GIFs:** must include the `animated` tag
 - **Static versions:** if a GIF exists, a static PNG version must also exist, using the same name with a `static` tag
 - **Accepted formats:** PNG, GIF only
--
+
 ### 🌙 Content Requirements
 
 - High-quality images only (avoid blurry, pixelated, or low-resolution wallpapers; minimum resolution: 1920x1080 recommended)
