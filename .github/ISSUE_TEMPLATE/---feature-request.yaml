@@ -1,0 +1,89 @@
+name: Feature Request
+labels: ["type: enhancement"]
+description: Suggest an idea to improve the wallpapers collection
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature for the wallpapers collection!
+        Your ideas help make the browsing experience better for everyone.
+        If you can implement it yourself, feel free to submit a pull request!
+
+  - type: dropdown
+    attributes:
+      label: Feature Category
+      description: What type of feature are you suggesting?
+      options:
+        - New Filtering/Search Options
+        - Wallpaper Display Improvements
+        - Download/Export Features
+        - UI/UX Enhancements
+        - New Wallpaper Categories
+        - Performance Improvements
+        - Mobile/Responsive Features
+        - Accessibility Features
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    attributes:
+      label: Feature Priority
+      description: How would you rate the importance of this feature?
+      options:
+        - Low - Nice to have
+        - Medium - Would improve user experience
+        - High - Essential for better functionality
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Problem or Use Case
+      description: |
+        What problem does this feature solve, or what use case does it address?
+        Describe the current limitation or missing functionality.
+      placeholder: |
+        Example: "I can't easily find wallpapers by color scheme" or "There's no way to preview wallpapers in full size"
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Describe The Feature
+      description: |
+        Please describe your proposed feature in detail.
+        How should it work? What should the user interface look like?
+      placeholder: |
+        Example: "Add a color picker filter that allows users to find wallpapers by dominant color"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Benefits
+      description: |
+        How would this feature improve the wallpapers browsing experience?
+        Who would benefit from this feature and how?
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Implementation Ideas
+      description: |
+        If you have any ideas about how this could be implemented, share them here.
+        This is optional but can help with development planning.
+      placeholder: |
+        Example: "Could use a color extraction library to analyze wallpapers and tag them by dominant colors"
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Alternative Solutions
+      description: |
+        Are there any alternative approaches or workarounds that could achieve similar results?
+    validations:
+      required: false

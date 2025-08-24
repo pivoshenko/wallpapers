@@ -1,0 +1,84 @@
+name: Bug Report
+labels: ["type: bug"]
+description: Create a report to help us improve the wallpapers experience
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to file a bug report for the wallpapers collection!
+        This helps us improve the browsing and filtering experience for everyone.
+
+  - type: dropdown
+    attributes:
+      label: Bug Category
+      description: What type of issue are you experiencing?
+      options:
+        - Wallpaper Display Issues
+        - Filtering/Search Problems
+        - Download Issues
+        - UI/UX Problems
+        - Performance Issues
+        - Mobile Responsiveness
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Describe The Bug
+      description: |
+        Please describe what happened, with as much detail as possible.
+        If it's a wallpaper display issue, please mention which specific wallpaper(s).
+        For filtering issues, mention which filter(s) you were using.
+      placeholder: |
+        Example: "When I filter by 'anime' category, wallpaper 001_anime.png doesn't appear in the results"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps To Reproduce
+      description: |
+        Please provide step-by-step instructions to reproduce the bug.
+      placeholder: |
+        1. Go to the wallpapers page
+        2. Click on '...' filter
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: |
+        A clear description of what you expected to happen.
+    validations:
+      required: false
+
+  - type: input
+    attributes:
+      label: Browser & Version
+      description: |
+        Which browser and version are you using?
+      placeholder: "e.g., Chrome 120, Firefox 121, Safari 17, Zen 1.0"
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Device & Screen Resolution
+      description: |
+        What device are you using and what's your screen resolution?
+      placeholder: "e.g., Desktop 1920x1080, Mobile iPhone 14, Tablet iPad Pro"
+    validations:
+      required: false
+
+  - type: textarea
+    attributes:
+      label: Additional Context
+      description: |
+        Add any other context about the problem here.
+        Screenshots are very helpful for wallpaper display issues!
+    validations:
+      required: false
