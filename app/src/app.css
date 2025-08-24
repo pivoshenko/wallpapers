@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Catppuccin Latte */
+    --background: 220 23% 95%; /* latte base */
+    --foreground: 234 16% 35%; /* latte text */
+    --card: 220 23% 95%; /* latte base */
+    --card-foreground: 234 16% 35%; /* latte text */
+    --popover: 220 23% 95%; /* latte base */
+    --popover-foreground: 234 16% 35%; /* latte text */
+    --primary: 266 85% 58%; /* latte mauve */
+    --primary-foreground: 220 23% 95%; /* latte base */
+    --secondary: 220 14% 89%; /* latte mantle */
+    --secondary-foreground: 234 16% 35%; /* latte text */
+    --muted: 220 14% 89%; /* latte mantle */
+    --muted-foreground: 233 13% 54%; /* latte subtext0 */
+    --accent: 220 14% 89%; /* latte mantle */
+    --accent-foreground: 234 16% 35%; /* latte text */
+    --destructive: 347 87% 44%; /* latte red */
+    --destructive-foreground: 220 23% 95%; /* latte base */
+    --border: 218 19% 87%; /* latte surface0 */
+    --input: 218 11% 65%; /* latte surface2 */
+    --ring: 266 85% 58%; /* latte mauve */
+    --radius: 0.5rem;
+
+    --sidebar-background: 220 23% 95%; /* latte base */
+    --sidebar-foreground: 234 16% 35%; /* latte text */
+    --sidebar-primary: 266 85% 58%; /* latte mauve */
+    --sidebar-primary-foreground: 220 23% 95%; /* latte base */
+    --sidebar-accent: 220 14% 89%; /* latte mantle */
+    --sidebar-accent-foreground: 234 16% 35%; /* latte text */
+    --sidebar-border: 218 19% 87%; /* latte surface0 */
+    --sidebar-ring: 266 85% 58%; /* latte mauve */
+  }
+
+  .dark {
+    /* Catppuccin Macchiato */
+    --background: 232 23% 18%; /* macchiato base */
+    --foreground: 227 68% 88%; /* macchiato text */
+    --card: 233 25% 22%; /* macchiato surface0 */
+    --card-foreground: 227 68% 88%; /* macchiato text */
+    --popover: 233 25% 22%; /* macchiato surface0 */
+    --popover-foreground: 227 68% 88%; /* macchiato text */
+    --primary: 267 83% 80%; /* macchiato mauve */
+    --primary-foreground: 232 23% 18%; /* macchiato base */
+    --secondary: 230 19% 26%; /* macchiato surface1 */
+    --secondary-foreground: 227 68% 88%; /* macchiato text */
+    --muted: 230 19% 26%; /* macchiato surface1 */
+    --muted-foreground: 227 35% 80%; /* macchiato subtext0 */
+    --accent: 230 19% 26%; /* macchiato surface1 */
+    --accent-foreground: 227 68% 88%; /* macchiato text */
+    --destructive: 351 74% 73%; /* macchiato red */
+    --destructive-foreground: 232 23% 18%; /* macchiato base */
+    --border: 230 19% 26%; /* macchiato surface1 */
+    --input: 228 12% 34%; /* macchiato surface2 */
+    --ring: 267 83% 80%; /* macchiato mauve */
+
+    --sidebar-background: 233 25% 22%; /* macchiato surface0 */
+    --sidebar-foreground: 227 68% 88%; /* macchiato text */
+    --sidebar-primary: 267 83% 80%; /* macchiato mauve */
+    --sidebar-primary-foreground: 232 23% 18%; /* macchiato base */
+    --sidebar-accent: 230 19% 26%; /* macchiato surface1 */
+    --sidebar-accent-foreground: 227 68% 88%; /* macchiato text */
+    --sidebar-border: 230 19% 26%; /* macchiato surface1 */
+    --sidebar-ring: 267 83% 80%; /* macchiato mauve */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  h1 {
+    @apply mb-6 scroll-m-20 text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-5xl;
+  }
+
+  h2 {
+    @apply my-10 mb-5 scroll-m-20 text-3xl font-semibold tracking-tight transition-colors sm:text-4xl;
+  }
+
+  h3 {
+    @apply mb-4 scroll-m-20 text-2xl font-semibold tracking-tight transition-colors;
+  }
+
+  h4 {
+    @apply mb-2 scroll-m-20 text-xl font-semibold tracking-tight transition-colors;
+  }
+
+  h5 {
+    @apply scroll-m-20 text-lg font-semibold tracking-tight transition-colors;
+  }
+
+  h6 {
+    @apply scroll-m-20 text-base font-semibold tracking-tight transition-colors;
+  }
+
+  hr {
+    @apply mx-auto my-6 w-4/5;
+  }
+
+  p {
+    @apply leading-7;
+  }
+
+  p > a {
+    @apply underline-offset-4 opacity-75 transition-opacity hover:underline;
+  }
+
+  p > a.active {
+    @apply font-medium opacity-100;
+  }
+
+  blockquote {
+    @apply mt-6 border-l-2 pl-6 italic;
+  }
+
+  code {
+    @apply relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold;
+  }
+
+  main {
+    @apply mx-auto w-full px-4 py-2;
+  }
+}
