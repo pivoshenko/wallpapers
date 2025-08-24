@@ -4,13 +4,13 @@
 
 <p align="center">
   <a href="https://github.com/pivoshenko/wallpapers/stargazers">
-    <img src="https://img.shields.io/github/stars/pivoshenko/wallpapers?style=for-the-badge&logo=starship&color=c6a0f6&logoColor=cad3f5&labelColor=24273a">
+    <img src="https://img.shields.io/github/stars/pivoshenko/wallpapers?style=for-the-badge&logo=starship&color=c6a0f6&logoColor=cad3f5&labelColor=302d41">
   </a>
   <a href="https://github.com/pivoshenko/wallpapers/contributors">
-    <img src="https://img.shields.io/github/contributors/pivoshenko/wallpapers?style=for-the-badge&logo=github&color=ed8796&logoColor=cad3f5&labelColor=24273a">
+    <img src="https://img.shields.io/github/contributors/pivoshenko/wallpapers?style=for-the-badge&logo=github&color=ed8796&logoColor=cad3f5&labelColor=302d41">
   </a>
   <a href="https://github.com/pivoshenko/wallpapers">
-      <img src="https://img.shields.io/github/repo-size/pivoshenko/wallpapers?style=for-the-badge&logo=hackthebox&color=a6da95&logoColor=cad3f5&labelColor=24273a">
+      <img src="https://img.shields.io/github/repo-size/pivoshenko/wallpapers?style=for-the-badge&logo=hackthebox&color=a6da95&logoColor=cad3f5&labelColor=302d41">
   </a>
 </p>
 
