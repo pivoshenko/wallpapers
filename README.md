@@ -40,11 +40,10 @@ All wallpapers must follow this format:
 
 `<name>_<tag_0>_<tag_1>_<tag_2>.png`
 
-- **Wallpaper name:** lowercase letters only, words separated by `-`. No spaces or special characters
-- **Tags:** lowercase letters only, separated by `_`
-- **GIFs:** must include the `animated` tag
-- **Static versions:** if a GIF exists, a static PNG version must also exist, using the same name with a `static` tag
-- **Accepted formats:** PNG, GIF only
+- Wallpaper name: lowercase letters only, words separated by `-`. No spaces or special characters
+- Tags: lowercase letters only, separated by `_`
+- GIFs: must include the `animated` tag
+- Accepted formats: PNG, GIF only
 
 ### 🌙 Content Requirements
 
