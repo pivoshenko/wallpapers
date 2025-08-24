@@ -52,6 +52,6 @@ All wallpapers must follow this format:
 
 ## 🖼️ References
 
-- `<https://github.com/zDyanTB/aesthetic-wallpapers>`
-- `<https://github.com/D3Ext/aesthetic-wallpapers>`
-- `<https://github.com/orangci/walls-catppuccin-mocha>`
+- <https://github.com/zDyanTB/aesthetic-wallpapers>
+- <https://github.com/D3Ext/aesthetic-wallpapers>
+- <https://github.com/orangci/walls-catppuccin-mocha>
