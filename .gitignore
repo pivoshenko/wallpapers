@@ -1,0 +1,25 @@
+# == Environment ==
+.env
+.env.*
+
+# == IDEs ==
+.vscode
+.zed
+
+# == Node ==
+/build
+/.svelte-kit
+.netlify
+.output
+.wrangler
+node_modules
+.vercel
+
+# == OS ==
+.DS_Store
+**/.DS_Store
+Thumbs.db
+
+# == Vite ==
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
