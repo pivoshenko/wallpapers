@@ -1,0 +1,46 @@
+name: Update wallpapers catalog
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "app/static/wallpapers"
+
+
+permissions:
+  contents: write
+
+jobs:
+  catalog:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Create catalog
+        run: |
+          OUTPUT_FILE="WALLPAPERS.md"
+
+          echo "# Wallpapers" > $OUTPUT_FILE
+          echo "" >> $OUTPUT_FILE
+
+          echo "| Wallpaper | Name |" >> $OUTPUT_FILE
+          echo "|-----------|------|" >> $OUTPUT_FILE
+
+          for file in app/static/wallpapers/*.{png,gif}; do
+            if [[ -f "$file" ]]; then
+              FILENAME=$(basename "$file")
+              NAME="${FILENAME%.*}"
+
+              echo "| ![${NAME}](${file}) | ${NAME} |" >> $OUTPUT_FILE
+            fi
+          done
+
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add $OUTPUT_FILE
+          git commit -m "docs: update catalog" && git push
+          exit 0
