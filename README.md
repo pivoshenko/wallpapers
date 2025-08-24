@@ -23,7 +23,9 @@
 A curated collection of high-quality wallpapers, organized by tags for easy browsing and downloading. Perfect for desktops, laptops, and NixOS setups.
 
 ✨ **Browse & Download** wallpapers using the web app: [pivoshenko-wallpapers](https://pivoshenko-wallpapers.netlify.app)
+
 📄 **See the full list** of wallpapers in [WALLPAPERS.md](./WALLPAPERS.md)
+
 📋 **Useful buttons** for NixOS users to quickly copy the `lib.fetchUrl()` function
 
 ## 🖼️ Features
