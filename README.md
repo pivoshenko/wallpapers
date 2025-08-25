@@ -18,7 +18,6 @@
 - [👐 Contributions](#-contributions)
   - [🪵 Naming Convention](#-naming-convention)
   - [🌙 Content Requirements](#-content-requirements)
-- [🖼️ References](#️-references)
 
 ## 🪴 Overview
 
@@ -49,9 +48,3 @@ All wallpapers must follow this format:
 
 - High-quality images only (avoid blurry, pixelated, or low-resolution wallpapers; minimum resolution: 1920x1080 recommended)
 - **No NSFW** or offensive content
-
-## 🖼️ References
-
-- <https://github.com/zDyanTB/aesthetic-wallpapers>
-- <https://github.com/D3Ext/aesthetic-wallpapers>
-- <https://github.com/orangci/walls-catppuccin-mocha>
