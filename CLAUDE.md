@@ -2,76 +2,78 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Overview
+## Overview
 
-A Next.js 16 wallpaper gallery site for browsing, filtering, and downloading wallpapers from Volodymyr Pivoshenko's personal collection. Deployed on Vercel. Uses JetBrains Mono font (loaded inside the shared `SiteLayout`) and Tailwind CSS via the role-based `pivoshenko.ui/tailwind-preset/site` preset (single dark theme, `popil` flavor).
+`pivoshenko.wallpapers` — a Next.js 16 / React 19 static gallery for browsing, filtering, and downloading a curated wallpaper collection. Deployed on Vercel at `wallpapers.pivoshenko.dev`. Almost all UI chrome, styling, and tooling config is inherited from the shared `pivoshenko.ui` package; the site-specific code is one page and one client component.
 
 ## Layout
 
-The Next.js app lives under [`site/`](./site/) (mirrors [`pivoshenko.ai`](../pivoshenko.ai/CLAUDE.md) and [`pivoshenko.dev`](../pivoshenko.dev/CLAUDE.md)). The repo root holds only `justfile`, `README.md`, `CLAUDE.md`, `LICENSE`, `.editorconfig`, `.gitignore`, `.github/`. All paths in this doc (`app/`, `components/`, `public/`, `package.json`, `next.config.ts`, `tailwind.config.ts`, `biome.json`, `vercel.json`, `generateFileList.js`, ...) are relative to `site/`.
-
-The Vercel project's **Root Directory** is set to `site/` in the dashboard.
+The app lives under `site/`. The repo root holds only `justfile`, `README.md`, `CLAUDE.md`, `LICENSE`, `.editorconfig`, `.gitignore`, `.no-tests`, `.github/`. Every path below (`app/`, `components/`, `public/`, `package.json`, ...) is relative to `site/`. The Vercel project's Root Directory is set to `site/` in the dashboard.
 
 ## Commands
 
-Run everything through the root `justfile`. It shells out to `pnpm -C site ...`:
+Run everything through the root `justfile`; each recipe shells out to `pnpm -C site ...`.
 
 ```bash
-just install          # pnpm install
-just dev              # Dev server with Turbopack (regenerates wallpaper manifest first)
-just build            # Production build (regenerates wallpaper manifest first)
-just start            # Production build, then next start
-just lint             # Biome lint
-just format           # Biome format (auto-fix)
-just audit            # pnpm audit (CI gate alongside lint + build)
-just test             # No-op while the .no-tests sentinel exists, otherwise fails
-just check            # Full gate: biome check + next build
-just update           # Bump dependencies
+just install   # pnpm install
+just dev       # regenerate manifest, then next dev --turbopack
+just build     # regenerate manifest, then next build
+just start     # build, then next start
+just lint      # biome lint .
+just format    # biome format . --write
+just check     # biome check . --write, then next build
+just audit     # pnpm audit
+just test      # no-op while .no-tests exists (see below)
+just update    # pnpm update
 ```
 
-Package manager is **pnpm** (10.x). CI (`.github/workflows/ci.yaml`) runs `install` -> `lint` -> `audit` -> `test` -> `build` on push to `main` and on PRs.
+pnpm 10.30.3, Node >= 24 (`engine-strict=true` in `site/.npmrc`, so a mismatched Node hard-fails install).
 
-There is no test suite. `just test` is a placeholder gated on the empty `.no-tests` file at the repo root: while that file exists the recipe prints a skip message and succeeds, and deleting it makes `just test` (and therefore CI) fail until a real test command replaces the recipe.
+CI (`.github/workflows/ci.yaml`, push to `main` + all PRs) runs `install` -> `lint` -> `audit` -> `test` -> `build` on `ubuntu-24.04-arm`.
+
+**No test suite.** `just test` is gated on the empty `.no-tests` sentinel at the repo root: while the file exists the recipe prints a skip and exits 0; delete it and the recipe fails, breaking CI until a real test command replaces it. Deleting the sentinel is the deliberate signal that tests are now expected.
 
 ## Architecture
 
-### Wallpaper Pipeline
+### Wallpaper pipeline
 
-`site/generateFileList.js` scans `site/public/wallpapers/` recursively, reads image dimensions via `image-size`, and writes `site/public/files.json`. This manifest is fetched at runtime by the client-side `WallpaperBrowser` component. Both `dev` and `build` scripts run this generation step first.
+`site/generateFileList.js` (CommonJS, run via `node`, not bundled) walks `site/public/wallpapers/` recursively, skips dotfiles, reads dimensions with `image-size`, and writes `site/public/files.json` — an array of `{filename, path, size (MB, string), width, height}`. Both `dev` and `build` run it first. `files.json` is committed, so it can go stale relative to the directory; regenerate with `pnpm -C site generate:wallpapers` (or just run `just dev`/`just build`) after adding or removing an image.
 
-### Wallpaper Naming Convention
+`components/wallpaper-browser.tsx` fetches `/files.json` client-side on mount — there is no server-side data path and no route beyond `/`.
 
-Filenames encode metadata: `name_tag1_tag2.ext`. The name segment uses hyphens for spaces (title-cased at display time). Everything after the first underscore is parsed as tags. Tags drive the filter UI.
+### Filename convention
 
-### Component Design Tokens
+Filenames encode metadata as `name_tag1_tag2.ext`. `parseFilename` strips at the first `.`, splits on `_`, title-cases the first segment (hyphens become spaces) as the display name, and treats every remaining segment as a tag. Existing files use zero-padded ordinals plus one tag (`000_abstract.png`, `041_game.jpg`); current tag set: `abstract`, `anime`, `game`, `logo`, `pixelart`, `rog`. Tags are derived purely from filenames — there is no metadata file to update.
 
-`site/app/globals.css` is a single `@import "pivoshenko.ui/ui/globals.css"`. All design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`) come from the shared package. Use the token classes instead of raw Tailwind utilities for consistency.
+### Known issue: stale download URLs
 
-### Key Files
+`components/wallpaper-browser.tsx:21-23` hardcodes `owner = 'pivoshenko'`, `repository = 'wallpapers'`, `repositoryPath = 'public/wallpapers'`, producing `raw.githubusercontent.com/pivoshenko/wallpapers/main/public/wallpapers/<path>`. That URL **404s** — the repo is `pivoshenko/pivoshenko.wallpapers` and the images live at `site/public/wallpapers/`. Both the "Download original" link and the copied Nix `fetchurl` snippet are affected.
 
-- `site/components/wallpaper-browser.tsx`: client component (`'use client'`); the main gallery with search, tag filtering, detail modal, and Nix snippet copy. Uses `Tag`, `TagButton` from `pivoshenko.ui`.
-- `site/app/layout.tsx`: thin wrapper around `<SiteLayout brand="pivoshenko.wallpapers">` from `pivoshenko.ui/next/site-layout`. Metadata via `siteMetadata(...)`, viewport via `siteViewport`. JetBrains Mono, `<html>`/`<body>` scaffolding, Vercel Analytics, and the shared `Nav`/`Footer`/`ScrollToTop` chrome are all owned by the shared layout. No local nav/footer/theme-toggle components.
-- `site/app/globals.css`: single `@import "pivoshenko.ui/ui/globals.css"` (see note above)
+### Styling
 
-### Shared Package Consumption
+`app/globals.css` is a single `@import "pivoshenko.ui/ui/globals.css"`. All visual vocabulary comes from that package's role layer: `type-*` (heading/body/ui/label/meta/logo), `fg-*`, `hover-*`, `bg-bg-*`, `border-ui`/`border-faint`, `text-accent-*`. Prefer these token classes over raw Tailwind color/type utilities. Tokens are a single dark palette scoped to `:root` — there is no light theme to check.
 
-This site pins `pivoshenko.ui` via git tag in `site/package.json`.
+### Consumption of `pivoshenko.ui`
 
-- `site/biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
-- `site/tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`
-- `site/tailwind.config.ts` uses `pivoshenko.ui/tailwind-preset/site` + the `withUiContent()` helper
-- `site/next.config.ts` spreads `baseNextConfig` from `pivoshenko.ui/next/config` and keeps `images.unoptimized: true` (the wallpaper manifest is static; no per-image transformation)
-- `site/postcss.config.mjs` re-exports `pivoshenko.ui/postcss.config.mjs`
-- `site/app/icon.tsx` + `site/app/opengraph-image.tsx` re-export the shared handlers from `pivoshenko.ui/next/icon` and `pivoshenko.ui/next/opengraph-image` (`createOgImage({brand,title,subtitle,domain})`)
+Pinned by git tag in `package.json` (`github:pivoshenko/pivoshenko.ui#v0.9.3`); bumping the UI means bumping that tag. It supplies:
 
-### Required Env Vars
+- `biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
+- `tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`; `@/*` maps to `./*`
+- `tailwind.config.ts` uses the `tailwind-preset/site` preset (adds the JetBrains Mono `fontFamily`) plus `withUiContent()`, which appends the package's own source glob so its component classes survive purge
+- `next.config.ts` spreads `baseNextConfig` (React strict mode, `transpilePackages: ['pivoshenko.ui']`, security headers: nosniff / X-Frame-Options DENY / Referrer-Policy / Permissions-Policy) and adds `images.unoptimized: true`
+- `postcss.config.mjs` re-exports the shared config
+- `app/layout.tsx` renders `<SiteLayout brand="pivoshenko.wallpapers">`, which owns `<html>`/`<body>`, the JetBrains Mono font, Nav/Footer/ScrollToTop, and `@vercel/analytics`. Metadata via `siteMetadata(...)`, viewport via `siteViewport`. `SpeedInsights` is passed through `afterShell`. Do not add local nav/footer/theme components.
+- `app/icon.tsx` and `app/opengraph-image.tsx` re-export the shared edge handlers (`createOgImage({brand, title, subtitle, domain})`)
 
-None. `@vercel/analytics` is wired via the Vercel integration. If a future build needs a secret, add it here as: name · purpose · scope (build/runtime) · visibility (`NEXT_PUBLIC_` public vs secret).
+Components used here: `Tag`, `TagButton` from the package root.
 
-### Formatting Rules (Biome)
+### Env vars
 
-- Indent: 2 spaces
-- Single quotes for JS/TS, double quotes for JSX
-- Trailing commas, no semicolons (ASI)
-- Line width: 80
-- CSS linting is disabled
+None. Vercel Analytics and Speed Insights are wired through the Vercel integration.
+
+## Conventions
+
+- Biome formatting (from the shared config): 2-space indent, 80-column width, single quotes in JS/TS, double quotes in JSX, trailing commas, **no semicolons**, imports auto-organized, `noUnusedVariables` is an error. CSS linting is off.
+- ASCII only in prose and source — the repo was deliberately normalized away from smart punctuation.
+- Conventional commits (`docs:`, `build(deps):`, `ci(audit):`, ...).
+- `pnpm-workspace.yaml` carries security overrides and `auditConfig.ignoreCves`; adding a suppression there is how `just audit` is kept green for unpatched advisories.
