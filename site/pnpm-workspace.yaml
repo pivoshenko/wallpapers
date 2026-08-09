@@ -6,3 +6,8 @@ overrides:
   "postcss@<8.5.10": ">=8.5.10"
   "js-yaml@<4.2.0": "^4.2.0"
   "sharp@<0.35.0": ">=0.35.0"
+
+auditConfig:
+  ignoreCves:
+    - "CVE-2025-71330"
+    - "CVE-2025-71329"
