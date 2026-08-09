@@ -55,7 +55,7 @@ Filenames encode metadata: `name_tag1_tag2.ext`. The name segment uses hyphens f
 
 ### Shared Package Consumption
 
-This site pins `pivoshenko.ui` via git tag in `site/package.json`. See parent `CLAUDE.md` for the cross-cutting pattern.
+This site pins `pivoshenko.ui` via git tag in `site/package.json`.
 
 - `site/biome.json` extends `./node_modules/pivoshenko.ui/config/biome.json`
 - `site/tsconfig.json` extends `pivoshenko.ui/tsconfig.base.json`
