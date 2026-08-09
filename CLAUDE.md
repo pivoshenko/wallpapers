@@ -8,48 +8,52 @@ A Next.js 16 wallpaper gallery site for browsing, filtering, and downloading wal
 
 ## Layout
 
-The Next.js app lives under [`site/`](./site/) (mirrors [`pivoshenko.ai`](../pivoshenko.ai/CLAUDE.md) and [`pivoshenko.dev`](../pivoshenko.dev/CLAUDE.md)). The repo root holds only `justfile`, `README.md`, `CLAUDE.md`, `LICENSE`, `.editorconfig`, `.gitignore`, `.github/`. All paths in this doc (`app/`, `components/`, `public/`, `package.json`, `next.config.ts`, `tailwind.config.ts`, `biome.json`, `vercel.json`, `generateFileList.js`, …) are relative to `site/`.
+The Next.js app lives under [`site/`](./site/) (mirrors [`pivoshenko.ai`](../pivoshenko.ai/CLAUDE.md) and [`pivoshenko.dev`](../pivoshenko.dev/CLAUDE.md)). The repo root holds only `justfile`, `README.md`, `CLAUDE.md`, `LICENSE`, `.editorconfig`, `.gitignore`, `.github/`. All paths in this doc (`app/`, `components/`, `public/`, `package.json`, `next.config.ts`, `tailwind.config.ts`, `biome.json`, `vercel.json`, `generateFileList.js`, ...) are relative to `site/`.
 
 The Vercel project's **Root Directory** is set to `site/` in the dashboard.
 
 ## Commands
 
-Run everything through the root `justfile` — it shells out to `pnpm -C site …`:
+Run everything through the root `justfile`. It shells out to `pnpm -C site ...`:
 
 ```bash
 just install          # pnpm install
 just dev              # Dev server with Turbopack (regenerates wallpaper manifest first)
 just build            # Production build (regenerates wallpaper manifest first)
+just start            # Production build, then next start
 just lint             # Biome lint
 just format           # Biome format (auto-fix)
 just audit            # pnpm audit (CI gate alongside lint + build)
+just test             # No-op while the .no-tests sentinel exists, otherwise fails
 just check            # Full gate: biome check + next build
 just update           # Bump dependencies
 ```
 
-Package manager is **pnpm** (10.x). No test suite exists. CI (`.github/workflows/ci.yaml`) runs `install` → `lint` → `audit` → `build` on push to `main` and on PRs.
+Package manager is **pnpm** (10.x). CI (`.github/workflows/ci.yaml`) runs `install` -> `lint` -> `audit` -> `test` -> `build` on push to `main` and on PRs.
+
+There is no test suite. `just test` is a placeholder gated on the empty `.no-tests` file at the repo root: while that file exists the recipe prints a skip message and succeeds, and deleting it makes `just test` (and therefore CI) fail until a real test command replaces the recipe.
 
 ## Architecture
 
-### Wallpaper pipeline
+### Wallpaper Pipeline
 
 `site/generateFileList.js` scans `site/public/wallpapers/` recursively, reads image dimensions via `image-size`, and writes `site/public/files.json`. This manifest is fetched at runtime by the client-side `WallpaperBrowser` component. Both `dev` and `build` scripts run this generation step first.
 
-### Wallpaper naming convention
+### Wallpaper Naming Convention
 
 Filenames encode metadata: `name_tag1_tag2.ext`. The name segment uses hyphens for spaces (title-cased at display time). Everything after the first underscore is parsed as tags. Tags drive the filter UI.
 
-### Component design tokens
+### Component Design Tokens
 
-`site/app/globals.css` is a single `@import "pivoshenko.ui/ui/globals.css"` — all design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`) come from the shared package. Use the token classes instead of raw Tailwind utilities for consistency.
+`site/app/globals.css` is a single `@import "pivoshenko.ui/ui/globals.css"`. All design tokens (`type-*`, `fg-*`, `hover-*`, `bg-tag*`, `border-*`) come from the shared package. Use the token classes instead of raw Tailwind utilities for consistency.
 
-### Key files
+### Key Files
 
-- `site/components/wallpaper-browser.tsx` — client component (`'use client'`); the main gallery with search, tag filtering, detail modal, and Nix snippet copy. Uses `Tag`, `TagButton` from `pivoshenko.ui`.
-- `site/app/layout.tsx` — thin wrapper around `<SiteLayout brand="pivoshenko.wallpapers">` from `pivoshenko.ui/next/site-layout`. Metadata via `siteMetadata(...)`, viewport via `siteViewport`. JetBrains Mono, `<html>`/`<body>` scaffolding, Vercel Analytics, and the shared `Nav`/`Footer`/`ScrollToTop` chrome are all owned by the shared layout. No local nav/footer/theme-toggle components.
-- `site/app/globals.css` — single `@import "pivoshenko.ui/ui/globals.css"` (see note above)
+- `site/components/wallpaper-browser.tsx`: client component (`'use client'`); the main gallery with search, tag filtering, detail modal, and Nix snippet copy. Uses `Tag`, `TagButton` from `pivoshenko.ui`.
+- `site/app/layout.tsx`: thin wrapper around `<SiteLayout brand="pivoshenko.wallpapers">` from `pivoshenko.ui/next/site-layout`. Metadata via `siteMetadata(...)`, viewport via `siteViewport`. JetBrains Mono, `<html>`/`<body>` scaffolding, Vercel Analytics, and the shared `Nav`/`Footer`/`ScrollToTop` chrome are all owned by the shared layout. No local nav/footer/theme-toggle components.
+- `site/app/globals.css`: single `@import "pivoshenko.ui/ui/globals.css"` (see note above)
 
-### Shared package consumption
+### Shared Package Consumption
 
 This site pins `pivoshenko.ui` via git tag in `site/package.json`. See parent `CLAUDE.md` for the cross-cutting pattern.
 
@@ -60,11 +64,11 @@ This site pins `pivoshenko.ui` via git tag in `site/package.json`. See parent `C
 - `site/postcss.config.mjs` re-exports `pivoshenko.ui/postcss.config.mjs`
 - `site/app/icon.tsx` + `site/app/opengraph-image.tsx` re-export the shared handlers from `pivoshenko.ui/next/icon` and `pivoshenko.ui/next/opengraph-image` (`createOgImage({brand,title,subtitle,domain})`)
 
-### Required env vars
+### Required Env Vars
 
 None. `@vercel/analytics` is wired via the Vercel integration. If a future build needs a secret, add it here as: name · purpose · scope (build/runtime) · visibility (`NEXT_PUBLIC_` public vs secret).
 
-### Formatting rules (Biome)
+### Formatting Rules (Biome)
 
 - Indent: 2 spaces
 - Single quotes for JS/TS, double quotes for JSX
