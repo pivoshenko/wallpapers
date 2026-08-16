@@ -273,29 +273,29 @@
     "height": 1760
   },
   {
-    "filename": "039_game.jpg",
-    "path": "039_game.jpg",
+    "filename": "039_concept.jpg",
+    "path": "039_concept.jpg",
     "size": "7.92",
     "width": 3840,
     "height": 2160
   },
   {
-    "filename": "040_game.jpg",
-    "path": "040_game.jpg",
+    "filename": "040_concept.jpg",
+    "path": "040_concept.jpg",
     "size": "11.26",
     "width": 3840,
     "height": 2160
   },
   {
-    "filename": "041_game.jpg",
-    "path": "041_game.jpg",
+    "filename": "041_concept.jpg",
+    "path": "041_concept.jpg",
     "size": "7.05",
     "width": 3840,
     "height": 2160
   },
   {
-    "filename": "042_game.jpg",
-    "path": "042_game.jpg",
+    "filename": "042_concept.jpg",
+    "path": "042_concept.jpg",
     "size": "14.98",
     "width": 3840,
     "height": 2160
@@ -313,5 +313,26 @@
     "size": "0.28",
     "width": 6016,
     "height": 3900
+  },
+  {
+    "filename": "045_concept.jpg",
+    "path": "045_concept.jpg",
+    "size": "1.31",
+    "width": 3199,
+    "height": 1361
+  },
+  {
+    "filename": "046_concept.jpg",
+    "path": "046_concept.jpg",
+    "size": "1.25",
+    "width": 3199,
+    "height": 1361
+  },
+  {
+    "filename": "047_concept.jpg",
+    "path": "047_concept.jpg",
+    "size": "1.41",
+    "width": 3199,
+    "height": 1361
   }
 ]
