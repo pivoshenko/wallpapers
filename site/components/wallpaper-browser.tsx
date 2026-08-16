@@ -19,8 +19,8 @@ type Wallpaper = FileRecord & {
 }
 
 const owner = 'pivoshenko'
-const repository = 'wallpapers'
-const repositoryPath = 'public/wallpapers'
+const repository = 'pivoshenko.wallpapers'
+const repositoryPath = 'site/public/wallpapers'
 
 function parseFilename(filename: string) {
   const [namePart = '', ...tagsArray] = filename.split('.')[0].split('_')
