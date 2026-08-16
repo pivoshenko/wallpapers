@@ -9,3 +9,16 @@
 ## Overview
 
 A curated collection of wallpapers with filtering, metadata, and direct downloads.
+
+## Attribution
+
+The MIT license in this repository covers the source code only.
+
+The wallpapers in `site/public/wallpapers/` are not my work. They were collected
+from various sources, remain the property of their respective creators, and are
+included here for personal use. Known sources: the `concept` pieces are by
+Piotr Krynski (https://www.artstation.com/krynski); the `rog` pieces are Asus
+brand assets.
+
+If you own one of these images and would like it credited differently or
+removed, open an issue and I will take care of it.

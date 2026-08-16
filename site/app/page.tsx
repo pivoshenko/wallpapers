@@ -7,6 +7,12 @@ export default function Home() {
         <p className="type-body fg-body max-w-2xl">
           Curated collection of wallpapers.
         </p>
+
+        <p className="type-meta fg-muted max-w-2xl">
+          Wallpapers are collected from various artists and remain the property
+          of their creators. See the repository for attribution and takedown
+          requests.
+        </p>
       </section>
 
       <WallpaperBrowser />

@@ -43,7 +43,7 @@ CI (`.github/workflows/ci.yaml`, push to `main` + all PRs) runs `install` -> `li
 
 ### Filename convention
 
-Filenames encode metadata as `name_tag1_tag2.ext`. `parseFilename` strips at the first `.`, splits on `_`, title-cases the first segment (hyphens become spaces) as the display name, and treats every remaining segment as a tag. Existing files use zero-padded ordinals plus one tag (`000_abstract.png`, `041_game.jpg`); current tag set: `abstract`, `anime`, `game`, `logo`, `pixelart`, `rog`. Tags are derived purely from filenames — there is no metadata file to update.
+Filenames encode metadata as `name_tag1_tag2.ext`. `parseFilename` strips at the first `.`, splits on `_`, title-cases the first segment (hyphens become spaces) as the display name, and treats every remaining segment as a tag. Existing files use zero-padded ordinals plus one tag (`000_abstract.png`, `041_concept.jpg`); current tag set: `abstract`, `anime`, `concept`, `logo`, `pixelart`, `rog`. Tags are derived purely from filenames — there is no metadata file to update.
 
 ### Known issue: stale download URLs
 
